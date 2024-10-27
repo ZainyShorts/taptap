@@ -91,6 +91,26 @@ class TransactionsDetailScreen extends StatelessWidget {
               ),
             ),
           ),
+        Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Card(
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildDetailRow("Service fee + Tax", "Rs. 0 🎉", null),
+                    // SizedBox(height: 10),
+                    // buildDetailRow("Service fee + Tax", "Rs. 0 🎉", null),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

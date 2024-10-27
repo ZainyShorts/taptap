@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taptap/Screens/Authentication/Login/login_screen.dart';
+import 'package:taptap/Screens/Card/buy_card.dart';
 
 import 'package:taptap/Screens/Home/home_screen.dart';
 import 'package:taptap/Screens/Splash/splash.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       ),
       home: 
       // onboarding ?
-         HomeScreen() 
+         BuyCardScreen() 
         // :
           // LoginScreen(),
     );
