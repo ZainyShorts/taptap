@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taptap/constans/colors.dart';
 
-
-
 class BuyCardScreen extends StatefulWidget {
   @override
   _CardScreenState createState() => _CardScreenState();
@@ -27,14 +25,17 @@ class _CardScreenState extends State<BuyCardScreen> with SingleTickerProviderSta
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My cards"),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: "Virtual"),
-            Tab(text: "Physical"),
-          ],
+        title: Text("My cards",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
+        
       ),
       body: TabBarView(
         controller: _tabController,
@@ -78,10 +79,14 @@ class _CardScreenState extends State<BuyCardScreen> with SingleTickerProviderSta
               style: ElevatedButton.styleFrom(
                 backgroundColor: primaryOrange, // Button color
                 minimumSize: Size(double.infinity, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
-              child: Text("Choose a card network"),
+              child: Text("Order Your Card",style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold),),
             ),
           ),
+       
         ],
       ),
     );
@@ -104,7 +109,6 @@ class _CardScreenState extends State<BuyCardScreen> with SingleTickerProviderSta
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
-                // Add your purchase logic here
                 _confirmPurchase();
               },
               child: Text("Yes"),
@@ -116,8 +120,6 @@ class _CardScreenState extends State<BuyCardScreen> with SingleTickerProviderSta
   }
 
   void _confirmPurchase() {
-    // Implement the card purchase logic here
-    // This could involve an API call, updating the UI, etc.
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text("Card purchase confirmed!")),
     );

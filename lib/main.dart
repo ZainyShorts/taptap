@@ -5,6 +5,7 @@ import 'package:taptap/Screens/Card/buy_card.dart';
 
 import 'package:taptap/Screens/Home/home_screen.dart';
 import 'package:taptap/Screens/Splash/splash.dart';
+import 'package:taptap/Screens/Transactions/Payment/payment_send_preview.dart';
 import 'package:taptap/Screens/Transactions/transactions_detail.dart';
 import 'package:taptap/Screens/onBoarding/onboarding_view.dart';
 
@@ -32,9 +33,9 @@ class MyApp extends StatelessWidget {
       ),
       home: 
       // onboarding ?
-         BuyCardScreen() 
+        //  HomeScreen() 
         // :
-          // LoginScreen(),
+          const LoginScreen(),
     );
   }
 }
