@@ -1,1 +1,4 @@
 const url = "http://localhost:4001";
+const String stripePublishableKey = "pk_test_51QR3cyF9Yb7IRTrT51bShRhzJUOX9Bs4x1OA708sjW7VIaiab74CcSg2lQZvAGhJffLZdaOgghXfD4lax1zwTb9k00ThfL5yL7";
+const String stripeSecretKey = "sk_test_51QR3cyF9Yb7IRTrTJoB2sfSQJTsd2bp22xVhxYYTSyJtDURyDQka18OSru48RpNrzldALGkSGDt60ibDviGEZdH400iGWdjBx8";
+

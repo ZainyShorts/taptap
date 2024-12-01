@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:taptap/Screens/Authentication/Login/login_screen.dart';
+import 'package:taptap/constans/methods.dart';
 
 
 class SettingScreen extends StatelessWidget {
@@ -38,6 +41,11 @@ class SettingScreen extends StatelessWidget {
             _buildInfoTile(
               icon: Icons.logout,
               text: 'Log out',
+              fn: () async {
+                final SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.clear(); 
+                popPush(context, LoginScreen());
+              },
             ),
             SizedBox(height: 30), // Add some spacing before footer
             Text(
@@ -46,26 +54,10 @@ class SettingScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Personal',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.payments),
-            label: 'Payments',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz),
-            label: 'More',
-          ),
-        ],
-        selectedItemColor: Colors.orange,
-        unselectedItemColor: Colors.grey,
-      ),
-    );
+      ));
+    
+       
+    
   }
 
   Widget _buildSectionTitle(String title) {
@@ -82,7 +74,7 @@ class SettingScreen extends StatelessWidget {
   }
 
   Widget _buildInfoTile(
-      {required IconData icon, required String text, IconData? trailingIcon}) {
+      {required IconData icon, required String text, IconData? trailingIcon, VoidCallback? fn}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8.0),
       padding: EdgeInsets.all(12.0),
@@ -107,9 +99,7 @@ class SettingScreen extends StatelessWidget {
         trailing: trailingIcon != null
             ? Icon(trailingIcon, color: Colors.grey)
             : null,
-        onTap: () {
-          // Add functionality on tap here
-        },
+        onTap:fn,
       ),
     );
   }

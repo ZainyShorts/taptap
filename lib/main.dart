@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taptap/Screens/Authentication/Login/login_screen.dart';
 import 'package:taptap/Screens/Authentication/Otp/otp_screen.dart';
@@ -10,14 +11,22 @@ import 'package:taptap/Screens/Splash/splash.dart';
 import 'package:taptap/Screens/Transactions/Payment/payment_send_preview.dart';
 import 'package:taptap/Screens/Transactions/transactions_detail.dart';
 import 'package:taptap/Screens/onBoarding/onboarding_view.dart';
+import 'package:taptap/constans/env.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await _setup();
   final prefs = await SharedPreferences.getInstance();
   final onboarding = prefs.getBool("onboarding")??false;
 
   runApp( MyApp(onboarding: onboarding));
 }
+
+Future<void> _setup() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey = stripePublishableKey;
+}
+
 
 class MyApp extends StatelessWidget {
   final bool onboarding;

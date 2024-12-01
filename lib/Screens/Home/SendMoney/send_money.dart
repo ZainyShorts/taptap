@@ -1,10 +1,35 @@
+
 import 'package:flutter/material.dart';
 import 'package:taptap/constans/colors.dart';
 
+class SendMoneyScreen extends StatefulWidget {
+  @override
+  _SendMoneyScreenState createState() => _SendMoneyScreenState();
+}
 
-
-class SendMoneyScreen extends StatelessWidget {
+class _SendMoneyScreenState extends State<SendMoneyScreen> {
   final Color backgroundColor = primaryOrange;
+  String amount = '0'; // Holds the typed amount
+
+  void updateAmount(String value) {
+    setState(() {
+      // Append value to the amount, ensuring it doesn't start with 0 unless it's the only digit
+      if (amount == '0') {
+        amount = value;
+      } else {
+        amount += value;
+      }
+    });
+  }
+
+  void deleteLastDigit() {
+    setState(() {
+      // Remove the last digit; reset to '0' if empty
+      if (amount.isNotEmpty) {
+        amount = amount.length > 1 ? amount.substring(0, amount.length - 1) : '0';
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +69,7 @@ class SendMoneyScreen extends StatelessWidget {
               ),
               SizedBox(height: 30),
               Text(
-                'Rs. 0',
+                'Rs. $amount', // Display the typed amount
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 48,
@@ -53,7 +78,10 @@ class SendMoneyScreen extends StatelessWidget {
               ),
             ],
           ),
-          NumericKeypad(),
+          NumericKeypad(
+            onNumberPressed: updateAmount,
+            onBackspacePressed: deleteLastDigit,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Row(
@@ -62,7 +90,6 @@ class SendMoneyScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    // backgroundColor: Colors.brown.shade400,
                     minimumSize: Size(150, 50),
                   ),
                   child: Text('Request'),
@@ -70,7 +97,6 @@ class SendMoneyScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    // backgroundColor: Colors.brown.shade400,
                     minimumSize: Size(150, 50),
                   ),
                   child: Text('Send'),
@@ -85,6 +111,14 @@ class SendMoneyScreen extends StatelessWidget {
 }
 
 class NumericKeypad extends StatelessWidget {
+  final Function(String) onNumberPressed;
+  final VoidCallback onBackspacePressed;
+
+  NumericKeypad({
+    required this.onNumberPressed,
+    required this.onBackspacePressed,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -104,7 +138,7 @@ class NumericKeypad extends StatelessWidget {
                     (number) => Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () => onNumberPressed(number),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent,
                           shadowColor: Colors.transparent,
@@ -127,7 +161,7 @@ class NumericKeypad extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
-              onPressed: () {},
+              onPressed: onBackspacePressed,
               icon: Icon(
                 Icons.backspace_outlined,
                 color: Colors.white,
@@ -140,3 +174,4 @@ class NumericKeypad extends StatelessWidget {
     );
   }
 }
+
