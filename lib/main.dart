@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:taptap/Screens/Authentication/Login/login_screen.dart';
+import 'package:taptap/Screens/Authentication/Otp/otp_screen.dart';
+import 'package:taptap/Screens/Authentication/Signnup/signup_screen.dart';
 import 'package:taptap/Screens/Card/buy_card.dart';
 
 import 'package:taptap/Screens/Home/home_screen.dart';
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Tap Tap',
       theme: ThemeData(
         primaryColor: Colors.orange.shade200,
         fontFamily: 'Helvetica',
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
       // onboarding ?
         //  HomeScreen() 
         // :
-          const LoginScreen(),
+           SplashScreen(),
     );
   }
 }

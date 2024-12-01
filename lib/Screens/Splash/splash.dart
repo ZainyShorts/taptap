@@ -1,10 +1,36 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:taptap/Screens/Authentication/Login/login_screen.dart';
+import 'package:taptap/Screens/Home/home_screen.dart';
 import 'package:taptap/constans/colors.dart';
+import 'package:taptap/constans/methods.dart';
 
 
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
    SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+
+
+class _SplashScreenState extends State<SplashScreen> {
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 5), ()async {
+      String token =  await getToken();
+      if(token == 'null')
+      {
+        popPush(context, const LoginScreen());
+      }else{
+        popPush(context, const HomeScreen());
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +48,9 @@ class SplashScreen extends StatelessWidget {
                 //   width: 100, // Adjust logo size as needed
                 // ),
                 SizedBox(height: 10),
-                Text(
+                FadeInUp(
+      duration: const Duration(milliseconds: 2000),
+      child:Text(
                   'TapTap',
                   style: TextStyle(
                     fontSize: 40,
@@ -30,7 +58,7 @@ class SplashScreen extends StatelessWidget {
                     fontStyle: FontStyle.italic, 
                     color: Colors.white,
                   ),
-                ),
+                )),
               ],
             ),
           ),

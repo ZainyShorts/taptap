@@ -40,6 +40,12 @@ dependencies:
   lottie: ^3.1.2
   smooth_page_indicator: ^1.1.0
   shared_preferences: ^2.2.2
+  http: ^1.2.2
+  fluttertoast: ^8.2.8
+  toastification: ^2.3.0
+  pinput: ^5.0.0
+  curved_navigation_bar: ^1.0.6
+  flutter_stripe: ^11.3.0
 
 dev_dependencies:
   flutter_test:
