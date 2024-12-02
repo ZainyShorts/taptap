@@ -99,7 +99,7 @@ class _LoadMoneyScreenState extends State<LoadMoneyScreen> {
               style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 18),
             ),
                  Text(
-                  'Rs. $limit incoming limit left this month',
+                  'Rs. $limit recharge limit left this month',
                   style: TextStyle(color: primaryOrange, fontSize: 16),
                 ),
                 SizedBox(height: 30),

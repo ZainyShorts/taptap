@@ -44,9 +44,9 @@ class MyApp extends StatelessWidget {
       ),
       home: 
       // onboarding ?
-        //  HomeScreen() 
+         HomeScreen() 
         // :
-           SplashScreen(),
+          //  SplashScreen(),
     );
   }
 }

@@ -1,11 +1,102 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
+import 'package:http/http.dart' as http;
+import 'package:nfc_manager/nfc_manager.dart';
 import 'package:taptap/Screens/Home/LoadMoney/load_money.dart';
 import 'package:taptap/Screens/Home/SendMoney/send_money.dart';
 import 'package:taptap/constans/colors.dart';
+import 'package:taptap/constans/env.dart';
+import 'package:taptap/constans/methods.dart';
 
-class TopSection extends StatelessWidget {
+class TopSection extends StatefulWidget {
   const TopSection({super.key});
+
+  @override
+  State<TopSection> createState() => _TopSectionState();
+}
+
+class _TopSectionState extends State<TopSection> {
+
+  int balance = 0; 
+  void getBalance() async {
+    try {
+      String token = await getToken(); 
+      http.Response res = await http.get(
+        Uri.parse('$url/getBalance'),
+        headers: <String, String>{
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json', 
+        },
+      );
+      Map response = jsonDecode(res.body);
+      print(response);
+
+      if (response["success"] == true) {
+        setState(() {
+        balance = response['balance'];
+        });
+      }
+    } catch (e) {}
+  }
+  
+
+  @override
+  void initState(){
+    super.initState();
+    getBalance();
+    _startNFCReading();
+  }
+
+
+void _startNFCReading() async {
+  try {
+    bool isAvailable = await NfcManager.instance.isAvailable();
+    if (isAvailable) {
+      NfcManager.instance.startSession(
+        onDiscovered: (NfcTag tag) async {
+          // Extract NFC data
+          final nfcData = tag.data.toString();
+
+          // Stop the session to prevent further system-level handling
+          await NfcManager.instance.stopSession();
+
+          // Show NFC modal with the tag's data
+          _showNfcModal(nfcData);
+        },
+        onError: (error) async {
+          debugPrint('NFC Error: $error');
+          await NfcManager.instance.stopSession();
+        },
+      );
+    } else {
+      debugPrint('NFC not available on this device.');
+    }
+  } catch (e) {
+    debugPrint('Error initializing NFC: $e');
+  }
+}
+
+
+  void _showNfcModal(String nfcData) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('NFC Tag Detected'),
+          content: Text('Data: $nfcData'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +122,16 @@ class TopSection extends StatelessWidget {
                       children: [
                         Column(
                           children: [
-                            Text(
-                              'Current balance',
-                              style: TextStyle(color: Colors.white),
+
+                            InkWell(
+                              onTap: _startNFCReading,
+                              child: Text(
+                                'Current balance',
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                              Text(
-                          'Rs. 1,021',
+                          'Rs. $balance',
                           style: TextStyle(
                             
                             color: Colors.white,
